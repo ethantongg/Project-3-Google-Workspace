@@ -1,9 +1,111 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <base target="_top">
-  </head>
-  <body>
+<head>
+  <base target="_top">
+  <link rel="stylesheet" href="https://ssl.gstatic.com/docs/script/css/add-ons1.css">
+  <style>
+    /* Previous styles remain unchanged */
+    .placeholder-note {
+      color: #666;
+      font-style: italic;
+      font-size: 0.9em;
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar branding-below">
+    <div class="section">
+      <h3>Budget Planner</h3>
+      <select id="template-select">
+        <option value="">Select a template</option>
+        <option value="monthly">Monthly Budget</option>
+        <option value="travel">Travel Budget</option>
+        <option value="event">Event Budget</option>
+      </select>
+      <button class="action" id="load-template">Load Template</button>
+      <div class="placeholder-note">Will load selected template</div>
+    </div>
     
-  </body>
+    <div class="section">
+      <h4>Quick Actions</h4>
+      <div class="button-group">
+        <button class="action" id="add-income">Add Income</button>
+        <button class="action" id="add-expense">Add Expense</button>
+      </div>
+      <div class="button-group">
+        <button class="action" id="view-summary">View Summary</button>
+        <button class="action" id="view-charts">View Charts</button>
+      </div>
+      <div class="placeholder-note">Triggers respective dialogs</div>
+    </div>
+    
+    <div class="section">
+      <h4>Savings Goal</h4>
+      <input type="text" id="goal-name" placeholder="Goal name">
+      <input type="number" id="goal-amount" placeholder="Target amount">
+      <input type="number" id="current-saved" placeholder="Currently saved">
+      <button class="action" id="set-goal">Set Goal</button>
+      <div class="placeholder-note">Visual progress display only</div>
+    </div>
+    
+    <div class="section">
+      <h4>Compare Months</h4>
+      <select id="month1">
+        <option value="jan">January</option>
+        <option value="feb">February</option>
+      </select>
+      <select id="month2">
+        <option value="jan">January</option>
+        <option value="feb">February</option>
+      </select>
+      <button class="action" id="compare-months">Compare</button>
+      <div class="placeholder-note">Will show comparison alert</div>
+    </div>
+  </div>
+  
+  <script>
+    // Updated with placeholder alerts
+    document.getElementById('load-template').addEventListener('click', () => {
+      const template = document.getElementById('template-select').value;
+      if (!template) {
+        alert('Please select a template first');
+        return;
+      }
+      google.script.run.withSuccessHandler(() => {
+        alert(`[Placeholder] ${template} template loaded`);
+      }).loadTemplate(template);
+    });
+    
+    document.getElementById('add-income').addEventListener('click', () => {
+      google.script.run.showIncomeDialog();
+    });
+    
+    document.getElementById('add-expense').addEventListener('click', () => {
+      google.script.run.showExpenseDialog();
+    });
+    
+    document.getElementById('view-summary').addEventListener('click', () => {
+      google.script.run.withSuccessHandler(() => {
+        alert('[Placeholder] Summary generated');
+      }).generateSummary();
+    });
+    
+    document.getElementById('view-charts').addEventListener('click', () => {
+      google.script.run.showChartDialog();
+    });
+    
+    document.getElementById('set-goal').addEventListener('click', () => {
+      alert('[Placeholder] Savings goal visualization updated');
+    });
+    
+    document.getElementById('compare-months').addEventListener('click', () => {
+      const month1 = document.getElementById('month1').value;
+      const month2 = document.getElementById('month2').value;
+      google.script.run.withSuccessHandler(() => {
+        alert(`[Placeholder] Comparing ${month1} and ${month2}`);
+      }).compareMonths(month1, month2);
+    });
+  </script>
+</body>
 </html>
