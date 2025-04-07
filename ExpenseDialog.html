@@ -1,9 +1,110 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <base target="_top">
-  </head>
-  <body>
+<head>
+  <base target="_top">
+  <link rel="stylesheet" href="https://ssl.gstatic.com/docs/script/css/add-ons1.css">
+  <style>
+    .form-group {
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 8px;
+      box-sizing: border-box;
+    }
+    .button-group {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="dialog">
+    <h3>Add New Expense</h3>
     
-  </body>
+    <div class="form-group">
+      <label for="expense-name">Expense Name</label>
+      <input type="text" id="expense-name" placeholder="e.g., Groceries, Rent">
+    </div>
+    
+    <div class="form-group">
+      <label for="expense-category">Category</label>
+      <select id="expense-category">
+        <option value="housing">Housing</option>
+        <option value="food">Food</option>
+        <option value="transportation">Transportation</option>
+        <option value="utilities">Utilities</option>
+        <option value="entertainment">Entertainment</option>
+        <option value="health">Health</option>
+        <option value="other">Other</option>
+      </select>
+    </div>
+    
+    <div class="form-group">
+      <label for="expense-amount">Amount</label>
+      <input type="number" id="expense-amount" placeholder="0.00" step="0.01">
+    </div>
+    
+    <div class="form-group">
+      <label for="expense-date">Date</label>
+      <input type="date" id="expense-date">
+    </div>
+    
+    <div class="form-group">
+      <label for="expense-recurring">Recurring?</label>
+      <select id="expense-recurring">
+        <option value="no">One-time</option>
+        <option value="weekly">Weekly</option>
+        <option value="biweekly">Bi-weekly</option>
+        <option value="monthly">Monthly</option>
+      </select>
+    </div>
+    
+    <div class="form-group">
+      <label for="expense-notes">Notes</label>
+      <textarea id="expense-notes" rows="3"></textarea>
+    </div>
+    
+    <div class="button-group">
+      <button class="action" id="save-expense">Save Expense</button>
+      <button class="action" id="cancel">Cancel</button>
+    </div>
+  </div>
+  
+  <script>
+    document.getElementById('expense-date').valueAsDate = new Date();
+    
+    document.getElementById('save-expense').addEventListener('click', saveExpense);
+    document.getElementById('cancel').addEventListener('click', cancel);
+    
+    function saveExpense() {
+      const expense = {
+        name: document.getElementById('expense-name').value,
+        category: document.getElementById('expense-category').value,
+        amount: parseFloat(document.getElementById('expense-amount').value),
+        date: document.getElementById('expense-date').value,
+        recurring: document.getElementById('expense-recurring').value,
+        notes: document.getElementById('expense-notes').value
+      };
+      
+      if (!expense.name || !expense.amount) {
+        alert('Please fill in at least name and amount');
+        return;
+      }
+      
+      google.script.run.saveExpense(expense);
+      google.script.host.close();
+    }
+    
+    function cancel() {
+      google.script.host.close();
+    }
+  </script>
+</body>
 </html>

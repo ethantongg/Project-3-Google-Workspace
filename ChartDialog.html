@@ -1,9 +1,325 @@
+LeggomyEggo
+leggomyeggo_96
+Invisible
+Allen.29, Bschleiger, Mkelsay22
+
+Allen.29 — 2/12/2025 1:15 PM
+we just need to get ben now
+Mkelsay22 — 2/12/2025 1:18 PM
+https://shorturl.at/Pr8WL
+Google Docs
+lab9
+Shorten url: https://shorturl.at/Pr8WL Attendance Understanding One-to-One, One-to-Many, and Many-to-Many Relationships in Databases Introduction In relational database design, relationships between tables define how data is connected. The three fundamental types of relationships are One-to-One...
+Image
+Allen.29 started a call that lasted 2 hours. — 2/16/2025 2:30 PM
+LeggomyEggo — 2/16/2025 2:36 PM
+https://lucid.app/lucidchart/2a427385-85cb-483b-845c-d715afba715d/edit?page=0_0&invitationId=inv_8b0ef644-0c3b-4454-a170-ab6c43bf0d82
+Lucid visual collaboration suite: Log in
+Go from imagining the future to building it. Log in to access Lucidchart for intelligent diagramming or Lucidspark for virtual whiteboarding. Teams can collaborate, ideate, and build projects in real time.
+Mkelsay22 added Bschleiger to the group. — 2/16/2025 2:36 PM
+Allen.29 — 2/16/2025 2:45 PM
+https://sqlzoo.net/wiki/AdventureWorks
+AdventureWorks
+Mkelsay22 — 2/16/2025 2:46 PM
+https://dataedo.com/samples/html/AdventureWorks/doc/AdventureWorks_2/tables.html
+https://dataedo.com/samples/html/AdventureWorks/doc/AdventureWorks_2/modules/Sales_12/module.html
+Mkelsay22 — 2/16/2025 3:12 PM
+Image
+Allen.29 — 2/16/2025 4:16 PM
+-> FROM INFORMATION_SCHEMA.TABLES
+    -> WHERE TABLE_NAME LIKE '%SalesOrderHeader%';
++----------------+-----------------------------+
+| TABLE_SCHEMA   | TABLE_NAME                  |
++----------------+-----------------------------+
+| adventureworks | salesorderheader            |
+| adventureworks | salesorderheadersalesreason |
++----------------+-----------------------------+
+2 rows in set (0.02 sec)
+Mkelsay22 — 2/16/2025 4:20 PM
+SELECT SUM(TotalDue) as total_due FROM salesorderheader;
+Allen.29 — 2/17/2025 1:09 PM
+import java.sql.*;
+Bschleiger — 2/17/2025 2:05 PM
+if you add the jar file to the java directory then run the statement form the google doc into the terminal everything should work
+java -cp ".:./mysql-connector-j-9.2.0.jar" JdbcExample
+Mkelsay22 — 2/24/2025 1:13 PM
+https://dev.mysql.com/downloads/connector/j/
+LeggomyEggo — 2/26/2025 1:14 PM
+ethant199@EthanTong:~/Project-2-Database$ git fetch origin
+ethant199@EthanTong:~/Project-2-Database$ git checkout Ben-Submission-1 -- java/JdbcClient.java
+ethant199@EthanTong:~/Project-2-Database$ git add java/JdbcClient.java
+ethant199@EthanTong:~/Project-2-Database$ git commit -m "added jdbc client"
+Bschleiger — 2/26/2025 2:24 PM
+bschleiger25@BensDell:~/Project-2-Database$ git fetch origin
+bschleiger25@BensDell:~/Project-2-Database$ git checkout Ben-Submission-1--java/JdbcCLient.java
+error: pathspec 'Ben-Submission-1--java/JdbcCLient.java' did not match any file(s) known to git
+keeps giving me this even tho its in Ben-Submission-1 on github
+LeggomyEggo — 2/26/2025 2:26 PM
+There’s gotta be a space for the 2 dashes between Ben submission 1 and the path
+So it would be Ben-Submission-1 — Java/JdbClient.java
+Bschleiger — 2/26/2025 2:34 PM
+ok it should be added now thanks
+Allen.29 — 2/26/2025 5:29 PM
+for testing the jdbcClient what url do we use for the database
+nvm got it
+Allen.29 — 2/26/2025 8:52 PM
+jdbc:mysql://localhost:3306
+Allen.29 — 2/26/2025 10:25 PM
+SELECT COLUMN_NAME
+FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE
+WHERE TABLE_NAME = 'employees' 
+AND CONSTRAINT_NAME = 'PRIMARY';
+this line gave me an empty set for show related tables when it was employees
+but when it was product it gave me something
+Allen.29 — 3/3/2025 1:05 PM
+Image
+Mkelsay22 — 3/3/2025 1:17 PM
+SELECT TABLE_NAME, REFERENCED_TABLE_NAME 
+FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE 
+WHERE REFERENCED_TABLE_NAME IS NOT NULL;
+LeggomyEggo — 3/4/2025 12:22 AM
+Enter database URL: jdbc:mysql://localhost:3306/AdventureWorks
+Enter username: root
+Enter password: password
+MySQL JDBC Driver not found
+java.lang.ClassNotFoundException: com.mysql.cj.jdbc.Driver
+        at java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:581)
+        at java.base/jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:178)
+        at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:527)
+        at java.base/java.lang.Class.forName0(Native Method)
+        at java.base/java.lang.Class.forName(Class.java:315)
+        at JdbcClient.connect(JdbcClient.java:17)
+        at JdbcClient.main(JdbcClient.java:89)
+Please connect to the DB
+Mkelsay22 — 3/4/2025 12:30 AM
+This
+Mkelsay22 — 3/4/2025 2:32 PM
+java -cp ".:./mysql-connector-j-9.2.0.jar" JdbcClient
+Bschleiger — 3/4/2025 4:14 PM
+i am going to look at the GUI stuff today and tmrw since I will be out of town this weekend. Should I push to the master branch?
+LeggomyEggo — 3/4/2025 4:14 PM
+Yes I think that’s fine
+Allen.29 — 3/17/2025 1:05 PM
+https://docs.google.com/document/d/1OuDN9VjZmz2V6noa0TCc79Vrk7pmV8Bj6T7nz7SXsqw/edit?tab=t.0
+Google Docs
+lab17 share
+Attendance Shorten url: https://shorturl.at/kNWty JFreeChart Tutorial 1. Introduction to JFreeChart JFreeChart is an open-source Java charting library that allows developers to create professional-quality charts, including: Pie Charts Line Charts Bar Charts Scatter Plots Time Series Charts 2....
+Image
+LeggomyEggo — 3/19/2025 1:23 PM
+javac -version
+javac --release 11 JFrameGui.java
+java -cp ".:mysql-connector-java-8.0.33.jar" JFrameGui
+Bschleiger — 3/19/2025 1:24 PM
+sudo apt update
+sudo apt install openjdk-21-jdk
+Mkelsay22 — 3/23/2025 1:37 PM
+java -cp .:jfreechart-1.5.5.jar:jcommon-1.0.24.jar:mysql-connector-j-9.2.0.jar JFrameGui
+LeggomyEggo — 3/23/2025 1:39 PM
+Image
+Allen.29 — 3/24/2025 1:09 PM
+https://docs.google.com/document/d/17xsgy8G-e0RFNyOBFHkmHSxXycwT0Dxe89wGMQm9EqQ/edit?tab=t.0
+Google Docs
+lab19
+Attendance Shortenurl: https://shorturl.at/UzTUWGoogle script demo/example code.gs: function doGet() { return HtmlService.createHtmlOutputFromFile('index'); } function submitMessage(message) { var sheet_id='1kiIieK7kGdXbR1fiphDGYx4V3CJGXrhyzknhc-Oqxc4'; var sheet = SpreadsheetApp.openById(s...
+Image
+LeggomyEggo — 3/26/2025 1:02 PM
+https://docs.google.com/document/d/1WC1I7gTVWG5jipuOi1c4u10G7zVdF60ErPAtmJz5qGc/edit?tab=t.0
+Google Docs
+lab20
+Attendance Shorten url: https://shorturl.at/Ge8jn Disclaimer: For privacy issue, we assume that all users emulates an app creator, which has access of the documents/data Google Apps Script: Working with Locks Locks in Google Apps Script help prevent concurrent execution conflicts in scripts that...
+Image
+Allen.29 — 3/31/2025 12:47 PM
+https://chromewebstore.google.com/detail/google-apps-script-github/lfjcgcmkmjjlieihflfhjopckgpelofo
+Google Apps Script GitHub Assistant - Chrome Web Store
+Manage your gas code with github/github enterprise/bitbucket/gitlab
+Image
+https://shorturl.at/8Fe5Q
+Google Docs
+Lab21
+Attendance: Shorten Url: ​​https://shorturl.at/8Fe5Q Install google apps script github assistant: https://chromewebstore.google.com/detail/google-apps-script-github/lfjcgcmkmjjlieihflfhjopckgpelofo Create your google app script here: Red: repo It will be empty if you have not connect to y...
+Image
+LeggomyEggo — 4/2/2025 12:53 PM
+https://docs.google.com/document/d/1Bm03X59OrKm6MUm_iyzptSerumlMT7bub5V5K6-NoG4/edit?tab=t.0
+Google Docs
+Lab22
+Attendance Shorten url: https://tinyurl.com/2t6853w6 Demo of: https://developers.google.com/workspace/add-ons/editors/docs/quickstart/translate#sidebar.html Demo translator: Computer Science
+Image
+LeggomyEggo — 4/4/2025 12:33 PM
+Expense Dialog
+Expense Dialog
 <!DOCTYPE html>
 <html>
-  <head>
-    <base target="_top">
-  </head>
-  <body>
+<head>
+  <base target="_top">
+  <link rel="stylesheet" href="https://ssl.gstatic.com/docs/script/css/add-ons1.css">
+Expand
+message.txt
+4 KB
+Income Dialog
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <link rel="stylesheet" href="https://ssl.gstatic.com/docs/script/css/add-ons1.css">
+  <style>
+Expand
+message.txt
+3 KB
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <link rel="stylesheet" href="https://ssl.gstatic.com/docs/script/css/add-ons1.css">
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+Expand
+message.txt
+5 KB
+Chart Dialog ^
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <link rel="stylesheet" href="https://ssl.gstatic.com/docs/script/css/add-ons1.css">
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <style>
+    .chart-container {
+      width: 100%;
+      height: 400px;
+      margin-bottom: 20px;
+    }
+    .chart-tabs {
+      display: flex;
+      margin-bottom: 15px;
+    }
+    .chart-tab {
+      padding: 8px 15px;
+      cursor: pointer;
+      background: #f1f1f1;
+      margin-right: 5px;
+      border-radius: 4px 4px 0 0;
+    }
+    .chart-tab.active {
+      background: #4285f4;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="dialog">
+    <h3>Budget Visualization</h3>
     
-  </body>
+    <div class="chart-tabs">
+      <div class="chart-tab active" data-chart="pie">Spending by Category</div>
+      <div class="chart-tab" data-chart="bar">Income vs Expenses</div>
+      <div class="chart-tab" data-chart="line">Savings Progress</div>
+    </div>
+    
+    <div id="pie-chart" class="chart-container"></div>
+    <div id="bar-chart" class="chart-container" style="display:none;"></div>
+    <div id="line-chart" class="chart-container" style="display:none;"></div>
+    
+    <div style="text-align: center;">
+      <button class="action" id="insert-chart">Insert into Document</button>
+      <button class="action" id="close-chart">Close</button>
+    </div>
+  </div>
+  
+  <script>
+    google.charts.load('current', {packages: ['corechart']});
+    google.charts.setOnLoadCallback(drawCharts);
+    
+    // Tab switching
+    document.querySelectorAll('.chart-tab').forEach(tab => {
+      tab.addEventListener('click', function() {
+        document.querySelectorAll('.chart-tab').forEach(t => t.classList.remove('active'));
+        this.classList.add('active');
+        
+        document.querySelectorAll('.chart-container').forEach(c => c.style.display = 'none');
+        document.getElementById(`${this.dataset.chart}-chart`).style.display = 'block';
+      });
+    });
+    
+    document.getElementById('insert-chart').addEventListener('click', insertChart);
+    document.getElementById('close-chart').addEventListener('click', closeChart);
+    
+    function drawCharts() {
+      // In a real implementation, this data would come from BudgetManager.gs
+      const sampleData = {
+        pie: [
+          ['Category', 'Amount'],
+          ['Housing', 1200],
+          ['Food', 400],
+          ['Transportation', 200],
+          ['Utilities', 150],
+          ['Entertainment', 100],
+          ['Health', 50],
+          ['Other', 100]
+        ],
+        bar: [
+          ['Month', 'Income', 'Expenses'],
+          ['Jan', 3000, 2200],
+          ['Feb', 3200, 2100],
+          ['Mar', 3100, 2300],
+          ['Apr', 3300, 2400]
+        ],
+        line: [
+          ['Month', 'Goal', 'Actual'],
+          ['Jan', 500, 200],
+          ['Feb', 1000, 450],
+          ['Mar', 1500, 800],
+          ['Apr', 2000, 1200]
+        ]
+      };
+      
+      drawPieChart(sampleData.pie);
+      drawBarChart(sampleData.bar);
+      drawLineChart(sampleData.line);
+    }
+    
+    function drawPieChart(data) {
+      const chartData = google.visualization.arrayToDataTable(data);
+      const options = {
+        title: 'Spending by Category',
+        pieHole: 0.4,
+        is3D: true
+      };
+      const chart = new google.visualization.PieChart(document.getElementById('pie-chart'));
+      chart.draw(chartData, options);
+    }
+    
+    function drawBarChart(data) {
+      const chartData = google.visualization.arrayToDataTable(data);
+      const options = {
+        title: 'Income vs Expenses',
+        bars: 'vertical',
+        vAxis: {format: 'currency'},
+        height: 400
+      };
+      const chart = new google.visualization.ColumnChart(document.getElementById('bar-chart'));
+      chart.draw(chartData, options);
+    }
+    
+    function drawLineChart(data) {
+      const chartData = google.visualization.arrayToDataTable(data);
+      const options = {
+        title: 'Savings Progress',
+        curveType: 'function',
+        legend: { position: 'bottom' },
+        vAxis: {format: 'currency'}
+      };
+      const chart = new google.visualization.LineChart(document.getElementById('line-chart'));
+      chart.draw(chartData, options);
+    }
+    
+    function insertChart() {
+      const activeTab = document.querySelector('.chart-tab.active').dataset.chart;
+      google.script.run.insertChart(activeTab);
+    }
+    
+    function closeChart() {
+      google.script.host.close();
+    }
+  </script>
+</body>
 </html>
