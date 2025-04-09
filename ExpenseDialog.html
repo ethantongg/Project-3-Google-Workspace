@@ -78,32 +78,59 @@
   </div>
   
   <script>
-    document.getElementById('expense-date').valueAsDate = new Date();
+    document.getElementById('load-template').addEventListener('click', loadTemplate);
+    document.getElementById('add-income').addEventListener('click', addIncome);
+    document.getElementById('add-expense').addEventListener('click', addExpense);
+    document.getElementById('view-summary').addEventListener('click', viewSummary);
+    document.getElementById('view-charts').addEventListener('click', viewCharts);
+    document.getElementById('set-goal').addEventListener('click', setGoal);
+    document.getElementById('compare-months').addEventListener('click', compareMonths);
     
-    document.getElementById('save-expense').addEventListener('click', saveExpense);
-    document.getElementById('cancel').addEventListener('click', cancel);
+    function loadTemplate() {
+      const template = document.getElementById('template-select').value;
+      if (!template) {
+        alert('Please select a template first');
+        return;
+      }
+      google.script.run.loadTemplate(template);
+    }
     
-    function saveExpense() {
-      const expense = {
-        name: document.getElementById('expense-name').value,
-        category: document.getElementById('expense-category').value,
-        amount: parseFloat(document.getElementById('expense-amount').value),
-        date: document.getElementById('expense-date').value,
-        recurring: document.getElementById('expense-recurring').value,
-        notes: document.getElementById('expense-notes').value
-      };
+    function addIncome() {
+      google.script.run.showIncomeDialog();
+    }
+    
+    function addExpense() {
+      google.script.run.showExpenseDialog();
+    }
+    
+    function viewSummary() {
+      google.script.run.generateSummary();
+    }
+    
+    function viewCharts() {
+      google.script.run.showChartDialog();
+    }
+    
+    function setGoal() {
+      const name = document.getElementById('goal-name').value;
+      const target = document.getElementById('goal-amount').value;
+      const saved = document.getElementById('current-saved').value;
       
-      if (!expense.name || !expense.amount) {
-        alert('Please fill in at least name and amount');
+      if (!name || !target) {
+        alert('Please enter goal name and target amount');
         return;
       }
       
-      google.script.run.saveExpense(expense);
-      google.script.host.close();
+      const progress = (saved / target) * 100;
+      document.getElementById('goal-progress').style.width = `${progress}%`;
+      document.getElementById('goal-text').textContent = 
+        `${name}: $${saved || 0} of $${target} (${progress.toFixed(1)}%)`;
     }
     
-    function cancel() {
-      google.script.host.close();
+    function compareMonths() {
+      const month1 = document.getElementById('month1').value;
+      const month2 = document.getElementById('month2').value;
+      google.script.run.compareMonths(month1, month2);
     }
   </script>
 </body>

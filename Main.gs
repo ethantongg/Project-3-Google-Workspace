@@ -16,7 +16,7 @@ function onInstall() {
 
 //Show main sidebar
 function showSidebar() {
-  const ui = HtmlService.createHtmlOutput('Sidebar')
+  const ui = HtmlService.createHtmlOutputFromFile('Sidebar')
   .setTitle('Budget Planner')
   .setWidth(350);
   DocumentApp.getUi().showSidebar(ui);
