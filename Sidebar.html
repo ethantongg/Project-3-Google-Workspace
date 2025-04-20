@@ -61,11 +61,64 @@
         border-top: none;
         margin-bottom: 15px;
       }
+      .summary-item {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 8px;
+      }
+      .summary-item .label {
+        font-weight: bold;
+      }
+      .summary-item .value {
+        text-align: right;
+      }
+      .balance-positive {
+        color: green;
+      }
+      .balance-negative {
+        color: red;
+      }
+      .category-list {
+        max-height: 200px;
+        overflow-y: auto;
+        border: 1px solid #ddd;
+        padding: 5px;
+        margin-bottom: 10px;
+      }
+      .category-item {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 5px;
+        padding: 5px;
+        border-bottom: 1px solid #eee;
+      }
+      .add-category-form {
+        margin-top: 10px;
+      }
+      .add-category-form input {
+        width: 70%;
+        padding: 8px;
+        margin-right: 5%;
+      }
+      .add-category-form button {
+        width: 25%;
+        padding: 8px;
+      }
+      .error-message {
+        color: red;
+        margin: 10px 0;
+        display: none;
+      }
+      .success-message {
+        color: green;
+        margin: 10px 0;
+        display: none;
+      }
     </style>
   </head>
   <body>
     <div class="header">
-      <h2>Budget Planner</h2>
+      <h2 style="margin: 0;">Budget Planner</h2>
     </div>
     
     <div class="tab">
@@ -76,56 +129,259 @@
     <div id="Overview" class="tabcontent">
       <div class="section">
         <h3>Summary</h3>
-        <p>Total Income: <span id="totalIncome">$0.00</span></p>
-        <p>Total Expenses: <span id="totalExpenses">$0.00</span></p>
-        <p>Balance: <span id="balance">$0.00</span></p>
-        <button onclick="showPlaceholderAlert('Refreshing budget summary')">Refresh</button>
+        <div class="summary-item">
+          <div class="label">Total Income:</div>
+          <div class="value" id="totalIncome">$0.00</div>
+        </div>
+        <div class="summary-item">
+          <div class="label">Total Expenses:</div>
+          <div class="value" id="totalExpenses">$0.00</div>
+        </div>
+        <div class="summary-item">
+          <div class="label">Balance:</div>
+          <div class="value" id="balance">$0.00</div>
+        </div>
+        <button onclick="refreshBudgetSummary()">Refresh</button>
       </div>
       
       <div class="section">
         <h3>Quick Actions</h3>
-        <button onclick="showPlaceholderAlert('Would add a new expense')">Add Expense</button>
-        <button onclick="showPlaceholderAlert('Would add new income')">Add Income</button>
-        <button onclick="showPlaceholderAlert('Would show budget visualizations')">View Charts</button>
+        <button onclick="addNewExpense()">Add Expense</button>
+        <button onclick="addNewIncome()">Add Income</button>
+        <button onclick="viewCharts()">View Charts</button>
+        <button onclick="insertBudgetSummary()">Insert Summary in Document</button>
       </div>
     </div>
     
     <div id="Manage" class="tabcontent">
       <div class="section">
-        <h3>Categories</h3>
-        <button onclick="showPlaceholderAlert('Would manage expense categories')">Manage Expense Categories</button>
-        <button onclick="showPlaceholderAlert('Would manage income categories')">Manage Income Categories</button>
+        <h3>Expense Categories</h3>
+        <div id="errorMessageExpense" class="error-message"></div>
+        <div id="successMessageExpense" class="success-message"></div>
+        <div class="category-list" id="expenseCategoriesList">
+        </div>
+        <div class="add-category-form">
+          <input type="text" id="newExpenseCategory" placeholder="New category">
+          <button onclick="addExpenseCategory()">Add</button>
+        </div>
       </div>
       
       <div class="section">
-        <h3>Actions</h3>
-        <button onclick="showPlaceholderAlert('Would generate detailed report')">Generate Report</button>
-        <button onclick="showPlaceholderAlert('Would export budget data')">Export Data</button>
-        <button onclick="showPlaceholderAlert('Would change budget settings')">Settings</button>
+        <h3>Income Categories</h3>
+        <div id="errorMessageIncome" class="error-message"></div>
+        <div id="successMessageIncome" class="success-message"></div>
+        <div class="category-list" id="incomeCategoriesList">
+        </div>
+        <div class="add-category-form">
+          <input type="text" id="newIncomeCategory" placeholder="New category">
+          <button onclick="addIncomeCategory()">Add</button>
+        </div>
+      </div>
+      
+      <div class="section">
+        <h3>Data Management</h3>
+        <button onclick="exportData()">Export Data</button>
+        <button onclick="showImportDialog()">Import Data</button>
       </div>
     </div>
     
     <script>
       document.addEventListener('DOMContentLoaded', function() {
         document.getElementById("defaultOpen").click();
+        refreshBudgetSummary();
+        loadCategories();
       });
       
       function openTab(evt, tabName) {
         var i, tabcontent, tablinks;
+        
         tabcontent = document.getElementsByClassName("tabcontent");
         for (i = 0; i < tabcontent.length; i++) {
           tabcontent[i].style.display = "none";
         }
+        
         tablinks = document.getElementsByClassName("tablinks");
         for (i = 0; i < tablinks.length; i++) {
           tablinks[i].className = tablinks[i].className.replace(" active", "");
         }
+        
         document.getElementById(tabName).style.display = "block";
         evt.currentTarget.className += " active";
       }
       
-      function showPlaceholderAlert(message) {
-        google.script.run.showAlert(message);
+      // Quick action functions
+      function addNewExpense() {
+        google.script.run.showExpenseDialog();
+      }
+      
+      function addNewIncome() {
+        google.script.run.showIncomeDialog();
+      }
+      
+      function viewCharts() {
+        google.script.run.showChartDialog();
+      }
+      
+      function refreshBudgetSummary() {
+        google.script.run
+          .withSuccessHandler(function(summary) {
+            document.getElementById('totalIncome').textContent = '$' + summary.totalIncome.toFixed(2);
+            document.getElementById('totalExpenses').textContent = '$' + summary.totalExpenses.toFixed(2);
+            
+            const balance = summary.balance;
+            const balanceElement = document.getElementById('balance');
+            balanceElement.textContent = '$' + balance.toFixed(2);
+            
+            balanceElement.className = 'value';
+            if (balance > 0) {
+              balanceElement.className += ' balance-positive';
+            } else if (balance < 0) {
+              balanceElement.className += ' balance-negative';
+            }
+          })
+          .withFailureHandler(function(error) {
+            console.error('Error getting budget summary:', error);
+          })
+          .getBudgetSummary();
+      }
+      
+      function loadCategories() {
+        google.script.run
+          .withSuccessHandler(function(categories) {
+            
+            categories.forEach(function(category) {
+              const item = document.createElement('div');
+              item.className = 'category-item';
+              item.textContent = category;
+              listElement.appendChild(item);
+            });
+          })
+          .getExpenseCategories();
+        
+        google.script.run
+          .withSuccessHandler(function(categories) {
+            const listElement = document.getElementById('incomeCategoriesList');
+            listElement.innerHTML = '';
+            
+            categories.forEach(function(category) {
+              const item = document.createElement('div');
+              item.className = 'category-item';
+              item.textContent = category;
+              listElement.appendChild(item);
+            });
+          })
+          .getIncomeCategories();
+      }
+      
+      function addExpenseCategory() {
+        const categoryInput = document.getElementById('newExpenseCategory');
+        const category = categoryInput.value.trim();
+        
+        document.getElementById('errorMessageExpense').style.display = 'none';
+        document.getElementById('successMessageExpense').style.display = 'none';
+        
+        if (!category) {
+          const errorElement = document.getElementById('errorMessageExpense');
+          errorElement.textContent = 'Please enter a category name.';
+          errorElement.style.display = 'block';
+          return;
+        }
+        
+        google.script.run
+          .withSuccessHandler(function(result) {
+            if (result.success) {
+              const successElement = document.getElementById('successMessageExpense');
+              successElement.textContent = result.message;
+              successElement.style.display = 'block';
+              
+              categoryInput.value = '';
+              loadCategories();
+            } else {
+              const errorElement = document.getElementById('errorMessageExpense');
+              errorElement.textContent = result.message;
+              errorElement.style.display = 'block';
+            }
+          })
+          .withFailureHandler(function(error) {
+            const errorElement = document.getElementById('errorMessageExpense');
+            errorElement.textContent = 'Error adding category: ' + error.message;
+            errorElement.style.display = 'block';
+          })
+          .addExpenseCategory(category);
+      }
+      
+      function addIncomeCategory() {
+        const categoryInput = document.getElementById('newIncomeCategory');
+        const category = categoryInput.value.trim();
+        
+        document.getElementById('errorMessageIncome').style.display = 'none';
+        document.getElementById('successMessageIncome').style.display = 'none';
+        
+        if (!category) {
+          const errorElement = document.getElementById('errorMessageIncome');
+          errorElement.textContent = 'Please enter a category name.';
+          errorElement.style.display = 'block';
+          return;
+        }
+        
+        google.script.run
+          .withSuccessHandler(function(result) {
+            if (result.success) {
+              const successElement = document.getElementById('successMessageIncome');
+              successElement.textContent = result.message;
+              successElement.style.display = 'block';
+              
+              categoryInput.value = '';
+              loadCategories();
+            } else {
+              const errorElement = document.getElementById('errorMessageIncome');
+              errorElement.textContent = result.message;
+              errorElement.style.display = 'block';
+            }
+          })
+          .withFailureHandler(function(error) {
+            const errorElement = document.getElementById('errorMessageIncome');
+            errorElement.textContent = 'Error adding category: ' + error.message;
+            errorElement.style.display = 'block';
+          })
+          .addIncomeCategory(category);
+      }
+      
+      function insertBudgetSummary() {
+        google.script.run
+          .withSuccessHandler(function(result) {
+            if (result.success) {
+              google.script.run.showAlert(result.message);
+            } else {
+              google.script.run.showAlert('Error: ' + result.message);
+            }
+          })
+          .withFailureHandler(function(error) {
+            google.script.run.showAlert('Error generating summary: ' + error.message);
+          })
+          .generateSummary();
+      }
+      
+      function exportData() {
+        google.script.run
+          .withSuccessHandler(function(jsonData) {
+            const textarea = document.createElement('textarea');
+            textarea.value = jsonData;
+            textarea.style.position = 'fixed';
+            document.body.appendChild(textarea);
+            
+            textarea.select();
+            document.execCommand('copy');
+            
+            document.body.removeChild(textarea);
+            
+            google.script.run.showAlert('Budget data copied to clipboard. You can paste and save it somewhere safe.');
+          })
+          .exportBudgetData();
+      }
+      
+      function showImportDialog() {
+        google.script.run.showImportDialog();
       }
     </script>
   </body>
